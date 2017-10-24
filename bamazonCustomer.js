@@ -83,10 +83,11 @@ function showProductInfo() {
 
 
 
-function updateProductamount(product_id,stockquantity,price,quantity){
-  //console.log(stockquantity + ": " + quantity);
+function updateProductamount(product_id,stockquantity,price,productsales,quantity){
+  console.log(productsales);
   var sqlquery = "update products set ? where ?";
-  dbConnection.query(sqlquery, [{stock_quantity:stockquantity - quantity},
+  dbConnection.query(sqlquery, [{stock_quantity:stockquantity - quantity,
+                               product_sales:productsales + (price * quantity)},
                     {item_id:product_id}], function (err, result) {
     if (err) throw err;
 
@@ -102,7 +103,7 @@ function updateProductamount(product_id,stockquantity,price,quantity){
 
 
 function validateProductamount(product_id,quantity){
-  var sqlquery = "select price,stock_quantity from products where ?";
+  var sqlquery = "select price,stock_quantity,product_sales from products where ?";
   dbConnection.query(sqlquery, {item_id:product_id}, function (err, result) {
     if (err) throw err;
 
@@ -115,7 +116,7 @@ function validateProductamount(product_id,quantity){
       }
       else{
         console.log("fulfilling user order!!!");
-        updateProductamount(product_id,result[i].stock_quantity,result[i].price,quantity);
+        updateProductamount(product_id,result[i].stock_quantity,result[i].price,result[i].product_sales,quantity);
       }
   }
 

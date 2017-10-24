@@ -9,7 +9,10 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "cli-table": "^0.3.1",
+    "easy-table": "^1.1.0"
+  },
   "devDependencies": {
     "inquirer": "^3.3.0",
     "mysql": "^2.15.0"
